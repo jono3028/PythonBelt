@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dojo Secrets Login</title>
+  </head>
+  <body>
+    <div class="">
+      <h3>Register</h3>
+      <form class="" action="{% url 'validation:validate' 'reg' %}" method="post">
+        {% csrf_token %}
+        <label for="frst_name">First Name: </label><input type="text" name="first_name" value="">
+        <label for="last_name">Last Name: </label><input type="text" name="last_name" value="">
+        <label for="email">E-mail: </label><input type="text" name="email" value="">
+        <label for="pw">Password: </label><input type="password" name="pw" value="">
+        <label for="pwConf">Confirm Password: </label><input type="password" name="pwConf" value="">
+        <label for="date_hired">Date Hired (dd/mm/yyyy): </label><input type="date" name="date_hired" value="">
+        <input type="submit" name="register" value="Register">
+      </form>
+    </div>
+    <div class="">
+      <h3>Login</h3>
+      <form class="" action="{% url 'validation:validate' 'login' %}" method="post">
+        {% csrf_token %}
+        <label for="email">E-mail: </label><input type="text" name="email" value="">
+        <label for="pw">Password: </label><input type="password" name="pw" value="">
+        <input type="submit" name="validate" value="Login">
+      </form>
+    </div>
+    <div class="">
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{message}}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </body>
+</html>

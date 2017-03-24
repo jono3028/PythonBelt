@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Wish List Item</title>
+  </head>
+  <body>
+    <div class="">
+      <h1>Create a New Wish List Item</h1>
+      <a href="{% url 'wishlist:home'%}">Home</a> | <a href="{% url 'validation:logout'%}">Logout</a>
+    </div>
+    <div class="">
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{message}}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    <form class="" action="{% url 'wishlist:addItem' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="user_id" value="{{request.session.user}}">
+      <label for="new_item">Item/Product: </label><input type="text" name="new_item" value="">
+      <input type="submit" name="submit" value="Add">
+    </form>
+  </body>
+</html>

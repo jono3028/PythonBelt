@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Wish List Dash Board</title>
+  </head>
+  <body>
+    <div class="">
+      <h1>Hello, {{currentUser.first_name}}</h1>
+      <a href="{% url 'validation:logout'%}">Logout</a>
+    </div>
+    <div class="">
+      <h2>your Wish List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Added By</th>
+            <th>Date Added</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in userList %}
+          <tr>
+            <td><a href="{% url 'wishlist:item' item.id %}">{{item.name}}</a></td>
+            <td>{{item.creator.first_name}}</td>
+            <td>{{item.created_at}}</td>
+            <td>
+              {% if currentUser.id == item.creator.id %}
+              <a href="{% url 'wishlist:deleteItem' item.id %}">Delete</a>
+              {% else %}
+              <a href="{% url 'wishlist:removeFromList' item.id %}">Remove from my Wish List</a>
+              {% endif %}
+             </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="">
+      <h2>Other Users' Wish List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Added By</th>
+            <th>Date Added</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in availItems%}
+          <tr>
+            <td><a href="{% url 'wishlist:item' item.id %}">{{item.name}}</a></td>
+            <td>{{item.creator.first_name}}</td>
+            <td>{{item.created_at}}</td>
+            <td><a href="{% url 'wishlist:addToList' item.id %}">Add to my Wishlist</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p><a href="{% url 'wishlist:create' %}">Add Item</a></p>
+  </body>
+</html>
